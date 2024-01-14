@@ -1,10 +1,11 @@
-const express = require('express')
+require('dotenv').config();
+const express = require('express');
 const mongoose = require('mongoose')
 const app = express()
 const Product = require('./models/productModel')
-app.use(express.json())
+app.use(express.json());
 
-
+const mongoString = process.env.DATABASE_URL
 
 // routes
 app.get('/', (req,res) => { // callback funcs must be used for routes
@@ -87,7 +88,7 @@ app.delete('/products/:id', async(req, res) => {
 })
 
 
-mongoose.connect('mongodb+srv://admin:admin@cluster0.wmwmpf3.mongodb.net/node-api?retryWrites=true&w=majority')
+mongoose.connect(mongoString)
 .then(() => {
     app.listen(3000, () => { // this is a callback function
         console.log('Node API is running on Port 3000')
